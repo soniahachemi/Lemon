@@ -21,7 +21,13 @@ int creer_serveur(int port){
 	if(bind ( socket_serveur , ( struct sockaddr *)& saddr , sizeof( saddr )) == -1)
 	{
 		perror( " bind socker_serveur " );
-	/* traitement de l ’ erreur */
+		/* traitement de l ’ erreur */
 	}
+	if ( listen ( socket_serveur , 10) == -1)
+	{
+		perror ( " listen socket_serveur " );
+		/* traitement d ’ erreur */
+	}
+
 return socket_serveur;
 }
