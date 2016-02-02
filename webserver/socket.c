@@ -28,7 +28,7 @@ int creer_serveur(int port){
 		perror ( " listen socket_serveur " );
 		/* traitement d ’ erreur */
 	}
-
+	
 
 return socket_serveur;
 }

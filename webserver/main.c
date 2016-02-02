@@ -31,8 +31,15 @@ int main (void)
 		perror ( " accept " );
 		/* traitement d ’ erreur */
 	}
-	const char * message_bienvenue="bjr";	
+	const char * message_bienvenue="Bonjour et bienvenue sur le serveur Lemon ! \n";	
 	write ( socket_client , message_bienvenue , strlen ( message_bienvenue ));
+	static char message_recu[200];
+	int i;
+	while(1){
+		if ((i = read(socket_client, message_recu,200 )) > 0){
+			write(socket_client, message_recu, i);
+		}
+	}
 	close(socket_serveur);
 	return 0;
 }
