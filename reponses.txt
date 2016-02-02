@@ -1,15 +1,20 @@
 1.Quittez votre serveur (Ctrl+C) et relancez le. Que se passe t'il .
 
-->
+-> Il ne se passe rien, le serveur se relance correctement, si un client se connecte au serveur et qu'il est relancer ensuite il faut attendre un certain temp avant de le pouvoir le relancer (bind socker_serveur : Address already in use)
 
-2.Ajouter un petit dÃ©lai avant l'envoi du message de bienvenue (1 seconde). Puis, exÃ©cutez la commande suivante : nc -z 127.0.0.1 8080. Que se passe t'il ?
+2.Ajouter un petit delai avant l'envoi du message de bienvenue (1 seconde). Puis, executez la commande suivante : nc -z 127.0.0.1 8080. Que se passe t'il ?
 
-->
+-> Avec l'option -z de la commande nc, le client se connecte mais n'attend pas de réponse, sans cette option il se connecte et reçoit le message de bienvenue
 
-3.ExÃ©cutez la commande suivante : telnet ::1 8080. Que se passe t'il ? Pourquoi ?
+3.Executez la commande suivante : telnet ::1 8080. Que se passe t'il ? Pourquoi ?
 
-->
+-> La connection au serveur est refusée car le serveur n'accepte pas de connection en IPV6 :
 
-4.Lancez deux clients simultanÃ©ment. Que se passe t'il ? Pourquoi ?
+   Trying ::1...
+   telnet: Unable to connect to remote host: Connection refused 
 
-->
+   
+
+4.Lancez deux clients simultanement. Que se passe t'il ? Pourquoi ?
+
+-> seul le premier client parviens à se connecté et à recevoir le message de bienvenue, quand ce client envoie un message au serveur, celui ci lui repete
