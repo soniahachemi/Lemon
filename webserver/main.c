@@ -20,20 +20,22 @@ int main (void)
 		perror("socket_serveur");
 		return -1;
 	}
+	
+
 // Creation client
 	int socket_client ;
 	size = sizeof (clientname);
-	while(1){
 	socket_client = accept ( socket_serveur , (struct sockaddr *) &clientname, &size);
 	if ( socket_client == -1)
 	{
 		perror ( " accept " );
 		/* traitement d ’ erreur */
 	}
-	const char * message_bienvenue="bjr";
-		write ( socket_client , message_bienvenue , strlen ( message_bienvenue ));
-		
-	}
+	const char * message_bienvenue="bjr";	
+	write ( socket_client , message_bienvenue , strlen ( message_bienvenue ));
 	close(socket_serveur);
 	return 0;
 }
+
+
+
