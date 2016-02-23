@@ -41,7 +41,7 @@ int main (void)
 			if(write ( socket_client , message_bienvenue , strlen ( message_bienvenue )) ==-1) perror("erreur ecriture");
 			static char message_recu[200];
 			int i;
-				while((i = read(socket_client, message_recu,200 )) ==-1){
+				while((i = read(socket_client, message_recu,200 )) !=-1){
 					write(socket_client, message_recu, i);
 				}
 		}
