@@ -38,6 +38,9 @@ int main (void)
 		
 		if(f==0){
 		// processus fils
+
+		//FILE *desc = fdopen(socket_client,"w+");
+
 			if(write ( socket_client , message_bienvenue , strlen ( message_bienvenue )) ==-1) perror("erreur ecriture");
 			static char message_recu[200];
 			int i;
