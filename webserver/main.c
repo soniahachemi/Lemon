@@ -14,7 +14,7 @@
 
 int main (void)
 {
-
+  initialiser_signaux();
 	struct sockaddr_in clientname;
 	int socket_serveur;
 	socklen_t size = sizeof (clientname);
@@ -37,7 +37,7 @@ int main (void)
 		if((f=fork()) ==-1 ) perror("Erreur fork");
 		
 		if(f==0){
-		
+		// processus fils
 			if(write ( socket_client , message_bienvenue , strlen ( message_bienvenue )) ==-1) perror("erreur ecriture");
 			static char message_recu[200];
 			int i;
@@ -52,6 +52,9 @@ int main (void)
 	return 0;
 
 }
+
+
+
 
 
 

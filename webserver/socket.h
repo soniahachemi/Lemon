@@ -6,4 +6,8 @@ doit pouvoir etre utilisee directement par un appel a accept .
 La fonction retourne -1 en cas d  erreur ou le descripteur de la
 socket creee . */
 int creer_serveur ( int port );
+void hand(int sig);
+void initialiser_signaux ( void );
+
+
 # endif
