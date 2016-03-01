@@ -48,8 +48,6 @@ int main (void)
 		else {
 			close(socket_client);
 		}
-		wait(NULL);
-		//waitpid(-1,&f,0);
 	}
 	return 0;
 
