@@ -34,28 +34,32 @@ int main (void)
 	int f;
 
 	while((socket_client = accept ( socket_serveur , (struct sockaddr *) &clientname, &size))  !=-1 ){
-		if((f=fork()) ==-1 ) perror("Erreur fork");
+		if((f=fork()) ==-1 ){ perror("Erreur fork");}
 		
 		if(f==0){
-		// processus fils
+			// processus fils
 
-		//FILE *desc = fdopen(socket_client,"w+");
+			FILE * desc;
+			char str[60];
 
-			if(write ( socket_client , message_bienvenue , strlen ( message_bienvenue )) ==-1) perror("erreur ecriture");
-			static char message_recu[200];
-			int i;
-				while((i = read(socket_client, message_recu,200 )) !=-1){
-					write(socket_client, message_recu, i);
-				}
+			desc = fdopen(socket_client,"w+");
+			if(desc==NULL){
+				perror("Erreur fopen");
+				return -1;
+			}
+			fprintf(desc,"%s \n",message_bienvenue);
+			while( fgets (str, 60, desc)!=NULL ){
+				fprintf(desc,"%s",str);
+
+	  		 }
+	  		fclose(desc);
 		}
 		else {
 			close(socket_client);
 		}
 	}
 	return 0;
-
 }
-
 
 
 
