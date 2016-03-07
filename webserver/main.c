@@ -24,6 +24,8 @@ int main (void)
 		return -1;
 	}
 
+	//FILE * descS;
+	//descS = fdopen(socket_serveur,"a");
 
 	
 		const char * message_bienvenue=" Bonjour et bienvenue sur le serveur Lemon ! \n\nCe qui est dramatique\nEn dehors de croire que l’on détient la vérité\nEst de s’accrocher telle une tique\nAfin de l’imposer\n\nAucune amitié ne vaut\nLa paix de l’esprit\nAucuns grands travaux,\nNe vaut, du doute l’autopsie\n\nDu temps où vos solitudes me fascinaient\nJ’ai perdus mes concepts de simplicité\nEt chercher de l’intérieur ce qui chez moi clochait\nAlors que tout était déjà bien rangé\n\nÀ chacun son Dieu, à chacun sa folie\nEt les esprits seront bien gardés\nÉcoute ce que l’instinct te dit\nEt marche sans te retourner\n\n";	
@@ -43,14 +45,20 @@ int main (void)
 			char str[60];
 
 			desc = fdopen(socket_client,"w+");
+
+
 			if(desc==NULL){
 				perror("Erreur fopen");
 				return -1;
 			}
+			// Analyse de la requete
 			fprintf(desc,"%s \n",message_bienvenue);
-			while( fgets (str, 60, desc)!=NULL ){
-				fprintf(desc,"%s",str);
+			char requete[100];			
+			fgets (requete, 100, desc);
 
+			// lecture des entrées clients
+			while( fgets (str, 60, desc)!=NULL ){
+				printf("%s",str);
 	  		 }
 	  		fclose(desc);
 		}
