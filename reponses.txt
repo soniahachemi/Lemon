@@ -18,3 +18,17 @@
 4.Lancez deux clients simultanement. Que se passe t'il ? Pourquoi ?
 
 -> seul le premier client parviens à se connecté et à recevoir le message de bienvenue, quand ce client envoie un message au serveur, celui ci lui repete
+
+
+Chapitre 5 :
+
+3.Quel est le message envoye par le client web ?
+
+-> GET / HTTP/1.1
+   User-Agent: curl/7.38.0
+   Host: localhost:8080
+   Accept: */*
+
+4.A l aide de RFC, trouvez le nom donne aux trois constituant de la premiere ligne de la requete envoyee par le client.
+
+-> le type de requête, la partie chemin de l URL de la ressource cible et la version du protocole
