@@ -29,7 +29,7 @@ int main (void)
 		const char * message_bienvenue=" Bonjour et bienvenue sur le serveur Lemon ! \n\nCe qui est dramatique\nEn dehors de croire que l’on détient la vérité\nEst de s’accrocher telle une tique\nAfin de l’imposer\n\nAucune amitié ne vaut\nLa paix de l’esprit\nAucuns grands travaux,\nNe vaut, du doute l’autopsie\n\nDu temps où vos solitudes me fascinaient\nJ’ai perdus mes concepts de simplicité\nEt chercher de l’intérieur ce qui chez moi clochait\nAlors que tout était déjà bien rangé\n\nÀ chacun son Dieu, à chacun sa folie\nEt les esprits seront bien gardés\nÉcoute ce que l’instinct te dit\nEt marche sans te retourner\n\n";	
 
 
-const char * message_erreur = "HTTP/1.1 400 Bad Request \r\n Connection: close \r\n Content-Length: 17 \r\n 400 Bad request \r\n";
+//const char * message_erreur = "HTTP/1.1 400 Bad Request \r\n Connection: close \r\n Content-Length: 17 \r\n 400 Bad request \r\n";
 
 
 // Creation client
@@ -54,37 +54,31 @@ const char * message_erreur = "HTTP/1.1 400 Bad Request \r\n Connection: close \
 				return -1;
 			}
 			// Analyse de la requete
-			char premiereLigne[15];			
-			fgets (premiereLigne, 15, desc);
-			
-			printf("1ere ligne requete recue : -%s-\n",premiereLigne);
 
-			if(strcmp(premiereLigne,"GET / HTTP/1.1")==0 || strcmp(premiereLigne,"GET / HTTP/1.0")==0 ){
-
-				printf("1ere ligne de requete valide \n");
-
-				// premiere ligne de requette valide		
-				while(helper>0){
-					fgets (str, 60, desc);
-					helper++;
-					if(strcmp(str,"\n")==0 || strcmp(str,"\r\n")==0){ 
-						helper=-1;
+				// premiere ligne de requette valide	
+					
+				while(helper > 0){
+					fgets (str, 60*sizeof(char), desc);					
+					printf("[%d] : -%s-",helper, str); 
+					helper ++;
+					if(helper==2 && strncmp(str,"GET / HTTP/1.1",14)!=0 && strncmp(str,"GET / HTTP/1.0",14)!=0 ){
+						printf("\t [%d] : echo %s-",helper, str);
 					}
-					printf(" : %s",str);
+					if ( strcmp(str,"\n")==0 || strcmp(str,"\r\n")==0  ) {
+						printf("fin");
+						helper = -2;
+					}
+
 	  		 	}
-					printf(" debut reponse");
+				printf(" debut reponse");
 				// debut de la reponse			
-
-				fprintf(desc,"\n ----- \n %s\n","HTTP/1.1 200 OK");
-				fprintf(desc,"\n------ \n %s\n",message_bienvenue);
-				while( fgets (str, 60, desc)!=NULL){
-					printf("%s",str);
-	  		 	}
-			}
-
-			else {
-				fprintf(desc,"%s \n",message_erreur);
-			}
+				if(helper!=-1){
+					fprintf(desc,"\n ----- \n %s\n","HTTP/1.1 200 OK");
+					fprintf(desc,"\n------ \n %s\n",message_bienvenue);
+					while( fgets (str, 60, desc)!=NULL){
+						printf("%s",str);
+		  		 	}
+				}
 
 	  		fclose(desc);
 		}
