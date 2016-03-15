@@ -35,6 +35,7 @@ const char * message_erreur = "HTTP/1.1 400 Bad Request \r\n Connection: close \
 // Creation client
 	int socket_client ;
 	int f;
+	int helper = 1;
 
 	while((socket_client = accept ( socket_serveur , (struct sockaddr *) &clientname, &size))  !=-1 ){
 		if((f=fork()) ==-1 ){ perror("Erreur fork");}
@@ -63,10 +64,15 @@ const char * message_erreur = "HTTP/1.1 400 Bad Request \r\n Connection: close \
 				printf("1ere ligne de requete valide \n");
 
 				// premiere ligne de requette valide		
-				while( fgets (str, 60, desc)!=NULL && strcmp(str,"\r\n")!=0  && strcmp(str,"\n")!=0 ){
-					// on ignore les lignes jusqu'a la prochaine ligne vide
+				while(helper>0){
+					fgets (str, 60, desc);
+					helper++;
+					if(strcmp(str,"\n")==0 || strcmp(str,"\r\n")==0){ 
+						helper=-1;
+					}
 					printf(" : %s",str);
 	  		 	}
+					printf(" debut reponse");
 				// debut de la reponse			
 
 				fprintf(desc,"\n ----- \n %s\n","HTTP/1.1 200 OK");
