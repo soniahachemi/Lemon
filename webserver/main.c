@@ -53,27 +53,22 @@ const char * message_erreur = "HTTP/1.1 400 Bad Request \r\n Connection: close \
 				return -1;
 			}
 			// Analyse de la requete
-			char premiereLigne[50];			
-			fgets (premiereLigne, 50, desc);
+			char premiereLigne[15];			
+			fgets (premiereLigne, 15, desc);
 			
-			printf("premiere ligne requete : %s \n",premiereLigne);
+			printf("1ere ligne requete recue : -%s-\n",premiereLigne);
 
-			char *p;
-  			char *array[2];
-  			int i = 0;
-  			p = strtok (premiereLigne,".");  
-  			while (p != NULL)
-  			{
-    			array[i++] = p;
-    			p = strtok (NULL, ".");
-  			}
+			if(strcmp(premiereLigne,"GET / HTTP/1.1")==0 || strcmp(premiereLigne,"GET / HTTP/1.0")==0 ){
 
+				printf("1ere ligne de requete valide \n");
 
-			if(strcmp(array[0],"GET / HTTP/1")==0 && ( strcmp(array[1],"1\n")==0 || strcmp(array[1],"0\n")==0) ){
-			
-				
+				// premiere ligne de requette valide		
 				while( fgets (str, 60, desc)!=NULL && strcmp(str,"\r\n")!=0  && strcmp(str,"\n")!=0 ){
+					// on ignore les lignes jusqu'a la prochaine ligne vide
+					printf(" : %s",str);
 	  		 	}
+				// debut de la reponse			
+
 				fprintf(desc,"\n ----- \n %s\n","HTTP/1.1 200 OK");
 				fprintf(desc,"\n------ \n %s\n",message_bienvenue);
 				while( fgets (str, 60, desc)!=NULL){
